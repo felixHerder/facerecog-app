@@ -12,7 +12,6 @@ const app = new Clarifai.App({
   apiKey: '5e2a1a4ad987448eabcfaba364e27f1f'
  });
 
-
 const particlesOptions = {
   particles: {
    number:{
@@ -27,14 +26,36 @@ const particlesOptions = {
    }
   }
 }
+
 class App extends Component {
   constructor(){
     super();
     this.state = {
-      input:'',
-      imageUrl:''
+      input:'photo.jpg',
+      imageUrl:'',
+      box:{}
     }
   }
+
+  calculateFaceLocation =(data)=>{
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+
+    const image = document.getElementById('inputImage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+
+    return{
+      left_col: clarifaiFace.left_col*width,
+      top_row: clarifaiFace.top_row*height,
+      right_col: width- (clarifaiFace.right_col * width),
+      bottom_row: height - (clarifaiFace.bottom_row * height)
+    }
+  }
+  
+  displayFaceBox = (box) => {
+    this.setState({box: box})
+  }
+
   onInputChange = (event)=>
   {
     this.setState({input : event.target.value});
@@ -46,14 +67,11 @@ class App extends Component {
       Clarifai.FACE_DETECT_MODEL,
       this.state.input)
     .then(
-      function(response){
-        console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-      },
-      function(err){
-
-      }
-    );
+      response=>
+      this.displayFaceBox(this.calculateFaceLocation(response)))
+      .catch(err=> console.log(err));
   }
+
   render(){
     return (
       <div className="App">
@@ -64,10 +82,13 @@ class App extends Component {
         <Logo />
         <Rank />
         <ImageLinkForm  onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-         <FaceRecognition imageUrl= {this.state.imageUrl}/>
+         <FaceRecognition imageUrl= {this.state.imageUrl} box={this.state.box}/>
       </div>
     )
-}
+  }
+  componentDidMount(){
+    console.log("App mounted");
+  }
 }
 
 
