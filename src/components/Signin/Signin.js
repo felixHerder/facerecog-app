@@ -36,7 +36,7 @@ class Signin extends React.Component {
   render() {
     const { onRouteChange } = this.props;
     return (
-      <main className="pa4 hover-black-80 br3 ba shadow-5 b--black-20  bg-white-10 mv4 w-100 w-70-m w-30-l mw6 center">
+      <main className="pa4 pb2 hover-black-80 br3 ba shadow-5 b--black-20  bg-white-10 mt6 w-100 w-70-m w-30-l mw6 center">
         <div className="measure">
           <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
             <legend className="f2 fw3 ph0 mh0">Sign In</legend>
@@ -52,8 +52,8 @@ class Signin extends React.Component {
           <div>
             <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Sign in" onClick={this.onSubmitSignIn} />
           </div>
-          <div className="lh-copy mt3">
-            <p onClick={() => onRouteChange('register')} className="f6 underline pointer link dim black db">Register</p>
+          <div className="lh-copy mt3 ">
+            <p onClick={() => onRouteChange('register')} className="f6 underline pointer link dim dark-gray db">Register</p>
           </div>
         </div>
       </main>

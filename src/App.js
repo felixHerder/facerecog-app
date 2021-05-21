@@ -5,6 +5,7 @@ import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import Footer from './components/Footer/Footer';
 import Particles from 'react-particles-js'
 import React, { Component } from 'react'
 import './App.css';
@@ -139,7 +140,7 @@ class App extends Component {
 
         { route === 'home' ?
           <>
-            <Logo />
+            <Logo className="fl" />
             <Rank name={this.state.user.name} entries={this.state.user.entries} />
             <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
             <FaceRecognition imageUrl={imageUrl} box={box} />
@@ -150,10 +151,10 @@ class App extends Component {
             <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
           )
         }
+        <Footer/>
       </div>
     )
   }
 }
-
 
 export default App;
