@@ -21,7 +21,7 @@ class Register extends React.Component {
   }
 
   onSubmitRegister = () => {
-    this.setState({isActive:true});
+    this.setState({isActive:true,failedmessage:""});
     fetch('https://pacific-anchorage-53440.herokuapp.com/register', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -38,7 +38,7 @@ class Register extends React.Component {
       }
       else {
         this.setState({isActive:false});
-        this.setState({failedmessage:"one or both fields are empty"})
+        this.setState({failedmessage:"One or both fields are empty"})
       }
     });
   } 
@@ -62,7 +62,7 @@ class Register extends React.Component {
             <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Register" onClick={this.onSubmitRegister} />
             <Spinner isActive={this.state.isActive}/>
           </div>
-          <p className="f6">{this.state.failedmessage}</p>
+          <p className="f6 dark-red">{this.state.failedmessage}</p>
         </div>
       </main>
     );

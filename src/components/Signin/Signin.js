@@ -19,7 +19,7 @@ class Signin extends React.Component {
     this.setState({ signInPassword: event.target.value });
   }
   onSubmitSignIn = () => {
-    this.setState({isActive:true});
+    this.setState({isActive:true,failedmessage:""});
     fetch('https://pacific-anchorage-53440.herokuapp.com/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -36,7 +36,7 @@ class Signin extends React.Component {
       }
       else {
         this.setState({isActive:false});
-        this.setState({failedmessage:"wrong username or passowrd"})
+        this.setState({failedmessage:"Wrong username or password"})
       }
     });
   }
@@ -64,7 +64,7 @@ class Signin extends React.Component {
           <div className="lh-copy">
             <p onClick={() => onRouteChange('register')} className="f6 underline pointer link dim dark-gray db">Register</p>
           </div>
-          <p className="f6">{this.state.failedmessage}</p>
+          <p className="f6 dark-red">{this.state.failedmessage}</p>
         </div>
       </main>
     );
