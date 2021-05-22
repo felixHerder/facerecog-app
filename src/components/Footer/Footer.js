@@ -4,7 +4,7 @@ const Footer = () => {
 
   return (
     <footer className="w-100 flex  tl bg-white-10 near-black f7 relative bottom-0 left-0" style={{"marginTop":"auto"}}>
-      <p className="dib ml3">Fron-end is React, back-end is Node/Express with  PostgreSQL.</p>
+      <p className="dib ml3">Front-end is React, back-end is Node/Express with  PostgreSQL.</p>
       <div className="flex items-center ml-auto mr3">
         <a className="w1 dib mh2" href="https://github.com/felixHerder/facerecog-app" title="github link">
           <svg className="dib" data-icon="github" viewBox="0 0 32 32">

@@ -43,8 +43,7 @@ const initialState = {
   isSignedin: false,
   user: {
     id: "",
-    name: "",
-    email: "",
+    username: "",
     entries: 0,
     joined: ''
   }
@@ -59,8 +58,7 @@ class App extends Component {
     this.setState({
       user: {
         id: data.id,
-        name: data.name,
-        email: data.email,
+        username: data.username,
         entries: data.entries,
         joined: data.joined
       }
@@ -141,7 +139,7 @@ class App extends Component {
         { route === 'home' ?
           <>
             <Logo className="fl" />
-            <Rank name={this.state.user.name} entries={this.state.user.entries} />
+            <Rank username={this.state.user.username} entries={this.state.user.entries} />
             <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
             <FaceRecognition imageUrl={imageUrl} box={box} />
           </>
