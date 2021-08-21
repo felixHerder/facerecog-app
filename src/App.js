@@ -38,7 +38,7 @@ const particlesOptions = {
 const initialState = {
   input: 'https://cdn.seat42f.com/wp-content/uploads/2013/08/12201104/CHARLIE-Its-Always-Sunny-In-Philadelphia.jpg',
   imageUrl: '',
-  box: {},
+  boxArr: [],
   route: 'signin',
   isSignedin: false,
   user: {
@@ -66,22 +66,21 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const caiBboxArray = data.outputs[0].data.regions.map(reg => reg.region_info.bounding_box);
 
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
-
-    return {
-      left_col: clarifaiFace.left_col * width,
-      top_row: clarifaiFace.top_row * height,
-      right_col: width - (clarifaiFace.right_col * width),
-      bottom_row: height - (clarifaiFace.bottom_row * height)
-    }
+    return caiBboxArray.map(bbox => ({
+      left_col: bbox.left_col * width,
+      top_row: bbox.top_row * height,
+      right_col: width - (bbox.right_col * width),
+      bottom_row: height - (bbox.bottom_row * height)
+    }));
   }
 
-  displayFaceBox = (box) => {
-    this.setState({ box: box })
+  displayFaceBox = (boxArr) => {
+    this.setState({ boxArr: boxArr })
   }
 
   onInputChange = (event) => {
@@ -128,7 +127,7 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedin, imageUrl, route, box } = this.state;
+    const { isSignedin, imageUrl, route, boxArr } = this.state;
     return (
       <div className="App">
         <Particles className="particles"
@@ -141,7 +140,7 @@ class App extends Component {
             <Logo className="fl" />
             <Rank username={this.state.user.username} entries={this.state.user.entries} />
             <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
-            <FaceRecognition imageUrl={imageUrl} box={box} />
+            <FaceRecognition imageUrl={imageUrl} boxArr={boxArr} />
           </>
           : (route === 'register' ?
             <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />

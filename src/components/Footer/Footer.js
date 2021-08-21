@@ -3,9 +3,10 @@ import React from 'react'
 const Footer = () => {
 
   return (
-    <footer className="w-100 flex  tl bg-white-10 near-black f7 relative bottom-0 left-0" style={{"marginTop":"auto"}}>
-      <p className="dib ml3">Front-end is React, back-end is Node/Express with  PostgreSQL.</p>
+    <footer className="w-100 flex  tl bg-white-10 near-black f7 relative bottom-0 left-0" style={{ "marginTop": "auto" }}>
+      <p className="dib ml3">Built with React and Express with  PostgreSQL on Heroku.</p>
       <div className="flex items-center ml-auto mr3">
+        <p className="mr3">Powered by <a href="https://www.clarifai.com/">Clarifai</a></p>
         <a className="w1 dib mh2" href="https://github.com/felixHerder/facerecog-app" title="github link">
           <svg className="dib" data-icon="github" viewBox="0 0 32 32">
             <title>github icon</title>
@@ -19,7 +20,7 @@ const Footer = () => {
           </svg>
         </a>
       </div>
-    </footer>
+    </footer >
   );
 }
 
