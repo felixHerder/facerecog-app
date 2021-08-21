@@ -90,33 +90,33 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-    fetch('https://pacific-anchorage-53440.herokuapp.com/imageurl', {
+    fetch(process.env.REACT_APP_API_URL + '/imageurl', {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         input: this.state.input
       })
     })
-    .then(resp=>resp.json())
-    .then(
-      response => {
-        if (response) {
-          fetch('https://pacific-anchorage-53440.herokuapp.com/image', {
-            method: "put",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              id: this.state.user.id
+      .then(resp => resp.json())
+      .then(
+        response => {
+          if (response) {
+            fetch(process.env.REACT_APP_API_URL + '/image', {
+              method: "put",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: this.state.user.id
+              })
             })
-          })
-            .then(res => res.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, { entries: count }, ['id', 'entries']));
-            })
-            .catch(err => console.log(err));
-        }
-        this.displayFaceBox(this.calculateFaceLocation(response));
-      })
-    .catch(err => console.log(err));
+              .then(res => res.json())
+              .then(count => {
+                this.setState(Object.assign(this.state.user, { entries: count }, ['id', 'entries']));
+              })
+              .catch(err => console.log(err));
+          }
+          this.displayFaceBox(this.calculateFaceLocation(response));
+        })
+      .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
@@ -136,7 +136,7 @@ class App extends Component {
         />
         <Navigation onRouteChange={this.onRouteChange} isSignedin={isSignedin} />
 
-        { route === 'home' ?
+        {route === 'home' ?
           <>
             <Logo className="fl" />
             <Rank username={this.state.user.username} entries={this.state.user.entries} />
@@ -149,7 +149,7 @@ class App extends Component {
             <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
           )
         }
-        <Footer/>
+        <Footer />
       </div>
     )
   }

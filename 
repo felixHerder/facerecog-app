@@ -1,0 +1,53 @@
+[33mcommit 670d96162069019923ba6ba7bac795727369b75c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31mheroku/master[m[33m)[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Sat May 22 12:37:08 2021 +0300
+
+    ui fix
+
+[33mcommit 67726b879a1aeebefa68c96ebd6fa974c5177463[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Sat May 22 12:21:40 2021 +0300
+
+    loading spinner
+
+[33mcommit f9a825930a6150caf52badc5ce77c8d0cee5912e[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Fri May 21 20:52:13 2021 +0300
+
+    heroku deploy
+
+[33mcommit 99a24a0acd83f704663c2a3899e61e270ce3b865[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Fri May 21 17:58:14 2021 +0300
+
+    deploy
+
+[33mcommit e7e6e99ac12c6de8aa39b7c70b36c51ecbb4876c[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Fri May 21 14:22:16 2021 +0300
+
+    security review
+
+[33mcommit 9fab81ec37f3fba56bf626149a00aa117b79d71b[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Tue May 18 14:34:44 2021 +0300
+
+    added signin and register forms
+
+[33mcommit 015557be5c00d37f23a86084abe1f61b3224e582[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Tue May 18 12:20:55 2021 +0300
+
+    added face detection box
+
+[33mcommit 3f601aa4ad7c48e5c8041efef8d7e20dc537f249[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Tue May 18 10:10:30 2021 +0300
+
+    front end v1
+
+[33mcommit f00c0a9d61d93f6ccd38ab48ffb3d5ad5faf91cb[m
+Author: felixHerder <felixbaciu@gmail.com>
+Date:   Mon May 17 13:31:32 2021 +0300
+
+    Initialize project using Create React App
