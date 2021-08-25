@@ -12,9 +12,9 @@ const Navigation = ({ onRouteChange, isSignedin, toggleModal }) => {
   else
     return (
       <nav className="flex justify-end">
-        <p onClick={() => onRouteChange('signin')} className='f5 link dim black-70 underline ph3 pointer mt5 mb0'>Sign in</p>
+        <p onClick={() => onRouteChange('signin')} className='f5 b link dim black-70 underline ph3 pointer mt3 mb0'>Sign in</p>
 
-        <p onClick={() => onRouteChange('register')} className='f5 link dim black-70 underline ph3 pointer mt5 mb0 mr3'>Register</p>
+        <p onClick={() => onRouteChange('register')} className='f5 b link dim black-70 underline ph3 pointer mt3 mb0 mr3'>Register</p>
       </nav>
     );
 

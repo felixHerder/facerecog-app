@@ -10,10 +10,14 @@ const Profile = ({ isProfileOpen, toggleModal, user, loadUser }) => {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(profile)
-    }).then(res => (res.json()))
+    }).then(resp => {
+      toggleModal();
+      loadUser({ ...user, ...profile });
+      return resp.json();
+    })
       .then(console.log)
       .catch(err => console.log(err + "cannot fetch profile" + user.id));
-    loadUser({ ...user, ...profile });
+
   }
   return (
     <div className="profile-modal">
@@ -22,7 +26,8 @@ const Profile = ({ isProfileOpen, toggleModal, user, loadUser }) => {
           onClick={toggleModal}>&times;</div>
         <img src="http://tachyons.io/img/logo.jpg"
           className="br-100 ba w3 dib" alt="avatar" />
-        <h1>{user.username}</h1>
+        <h1>{profile.name}</h1>
+        <h5 className="b">{user.username}</h5>
         <h4>Images submited: {user.entries}</h4>
         <p>Member since: {new Date(user.joined).toLocaleDateString()}</p>
         <hr />
