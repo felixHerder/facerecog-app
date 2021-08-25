@@ -6,8 +6,10 @@ import Register from './components/Register/Register';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Footer from './components/Footer/Footer';
-import Particles from 'react-particles-js'
-import React, { Component } from 'react'
+import Particles from 'react-particles-js';
+import React, { Component } from 'react';
+import Modal from './components/Modal/Modal';
+import Profile from './components/Profile/Profile';
 import './App.css';
 
 const particlesOptions = {
@@ -41,11 +43,15 @@ const initialState = {
   boxArr: [],
   route: 'signin',
   isSignedin: false,
+  isProfileOpen: false,
   user: {
     id: "",
     username: "",
+    name: ' ',
     entries: 0,
-    joined: ''
+    joined: '',
+    pet: 'chupakapra',
+    color: '#555555'
   }
 }
 
@@ -58,6 +64,9 @@ class App extends Component {
     this.setState({
       user: {
         id: data.id,
+        name: data.name,
+        pet: data.pet,
+        color: data.color,
         username: data.username,
         entries: data.entries,
         joined: data.joined
@@ -126,15 +135,26 @@ class App extends Component {
     this.setState({ route: route });
   }
 
+  toggleModal = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      isProfileOpen: !prevState.isProfileOpen
+    }));
+  }
+
   render() {
-    const { isSignedin, imageUrl, route, boxArr } = this.state;
+    const { isSignedin, imageUrl, route, boxArr, isProfileOpen, user } = this.state;
     return (
-      <div className="App">
+      <div className="App" >
         <Particles className="particles"
           params={particlesOptions}
         />
-        <Navigation onRouteChange={this.onRouteChange} isSignedin={isSignedin} />
-
+        <Navigation onRouteChange={this.onRouteChange} isSignedin={isSignedin} toggleModal={this.toggleModal}
+        />
+        {isProfileOpen && <Modal >
+          <Profile
+            isProfileOpen={isProfileOpen} toggleModal={this.toggleModal} user={user} loadUser={this.loadUser} />
+        </Modal>}
         {route === 'home' ?
           <>
             <Logo className="fl" />

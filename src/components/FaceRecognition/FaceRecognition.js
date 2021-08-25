@@ -17,7 +17,6 @@ const FaceRecognition = ({ imageUrl, boxArr }) => {
               </div>)
             : null
         }
-
       </div>
     </div>
   );
