@@ -24,6 +24,9 @@ class Register extends React.Component {
     if (event.code === "Enter")
       this.onSubmitRegister()
   }
+  saveAuthTokeninSession = (token) => {
+    window.localStorage.setItem('token', token);
+  }
   onSubmitRegister = () => {
     this.setState({ isActive: true, failedmessage: "" });
     fetch(process.env.REACT_APP_API_URL + '/register', {
@@ -35,14 +38,28 @@ class Register extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(user => {
-        if (user.id) {
-          this.props.loadUser(user);
-          this.props.onRouteChange('home')
+      .then(data => {
+        if (data.userId && data.succes === 'true') {
+          this.saveAuthTokeninSession(data.token);
+          fetch(`${process.env.REACT_APP_API_URL}/profile/${data.userId}`, {
+            method: 'get',
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": data.token
+            }
+          })
+            .then(resp => resp.json())
+            .then(data => {
+              if (data && data.username) {
+                this.props.loadUser(data);
+                this.props.onRouteChange('home');
+              }
+            })
+            .catch(console.log);
         }
         else {
           this.setState({ isActive: false });
-          this.setState({ failedmessage: "One or both fields are empty" })
+          this.setState({ failedmessage: "Something is not right" })
         }
       });
   }

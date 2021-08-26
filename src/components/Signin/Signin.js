@@ -23,6 +23,10 @@ class Signin extends React.Component {
     if (event.code === "Enter")
       this.onSubmitSignIn()
   }
+
+  saveAuthTokeninSession = (token) => {
+    window.localStorage.setItem('token', token);
+  }
   onSubmitSignIn = () => {
     this.setState({ isActive: true, failedmessage: "" });
     fetch(`${process.env.REACT_APP_API_URL}/signin`, {
@@ -35,9 +39,23 @@ class Signin extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        if (data.id) {
-          this.props.loadUser(data)
-          this.props.onRouteChange('home')
+        if (data.userId && data.succes === 'true') {
+          this.saveAuthTokeninSession(data.token);
+          fetch(`${process.env.REACT_APP_API_URL}/profile/${data.userId}`, {
+            method: 'get',
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": data.token
+            }
+          })
+            .then(resp => resp.json())
+            .then(data => {
+              if (data && data.username) {
+                this.props.loadUser(data);
+                this.props.onRouteChange('home');
+              }
+            })
+            .catch(console.log);
         }
         else {
           this.setState({ isActive: false });

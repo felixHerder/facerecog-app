@@ -55,10 +55,45 @@ const initialState = {
   }
 }
 
+
 class App extends Component {
   constructor() {
     super();
     this.state = initialState;
+  }
+
+  componentDidMount() {
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      fetch(`${process.env.REACT_APP_API_URL}/signin`, {
+        method: 'post',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token
+        }
+      })
+        .then(resp => resp.json())
+        .then(data => {
+          if (data && data.id) {
+            fetch(`${process.env.REACT_APP_API_URL}/profile/${data.id}`, {
+              method: 'get',
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+              }
+            })
+              .then(resp => resp.json())
+              .then(data => {
+                if (data && data.username) {
+                  this.loadUser(data);
+                  this.onRouteChange('home');
+                }
+              })
+              .catch(console.log);
+          }
+        })
+        .catch(console.log);
+    }
   }
   loadUser = (data) => {
     this.setState({
@@ -75,6 +110,7 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
+    if (!data || !data.outputs) return {};
     const caiBboxArray = data.outputs[0].data.regions.map(reg => reg.region_info.bounding_box);
 
     const image = document.getElementById('inputImage');
@@ -97,10 +133,14 @@ class App extends Component {
   }
 
   onButtonSubmit = () => {
+    const token = window.localStorage.getItem('token');
     this.setState({ imageUrl: this.state.input });
     fetch(process.env.REACT_APP_API_URL + '/imageurl', {
       method: "post",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
       body: JSON.stringify({
         input: this.state.input
       })
@@ -111,7 +151,10 @@ class App extends Component {
           if (response) {
             fetch(process.env.REACT_APP_API_URL + '/image', {
               method: "put",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+              },
               body: JSON.stringify({
                 id: this.state.user.id
               })
@@ -128,8 +171,17 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
-    if (route === 'signout')
+    if (route === 'signout') {
+      fetch(process.env.REACT_APP_API_URL + '/profile/signout', {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": window.localStorage.getItem('token')
+        }
+      });
+      window.localStorage.removeItem('token');
       this.setState(initialState);
+    }
     else if (route === 'home')
       this.setState({ isSignedin: true });
     this.setState({ route: route });

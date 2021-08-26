@@ -8,14 +8,16 @@ const Profile = ({ isProfileOpen, toggleModal, user, loadUser }) => {
   const updateProfile = () => {
     fetch(process.env.REACT_APP_API_URL + '/profile/' + user.id, {
       method: 'post',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": window.localStorage.getItem('token')
+      },
       body: JSON.stringify(profile)
     }).then(resp => {
       toggleModal();
       loadUser({ ...user, ...profile });
       return resp.json();
     })
-      .then(console.log)
       .catch(err => console.log(err + "cannot fetch profile" + user.id));
 
   }
@@ -43,7 +45,9 @@ const Profile = ({ isProfileOpen, toggleModal, user, loadUser }) => {
           className="db pa2 w-20" type="color" name="color" id="color" autoComplete="off"
           defaultValue={user.color}
           required
-          onChange={(e) => setProfile({ ...profile, color: e.target.value })} />
+          onChange={(e) => {
+            setProfile({ ...profile, color: e.target.value })
+          }} />
         <label className="db mt2 fw6 lh-copy f6" htmlFor="pet">Pet</label>
         <input
           className="pa2 w-100" type="text" name="pet" id="pet" autoComplete="off"
