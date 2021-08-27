@@ -16,7 +16,7 @@
     "tsparticles": "^1.33.3"
   },
   "scripts": {
-    "start": "serve -s build -p 3000",
+    "start": "serve -s build -p process.env.PORT || 3000",
     "start:dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
