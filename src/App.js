@@ -38,7 +38,7 @@ const particlesOptions = {
 };
 
 const initialState = {
-  input: 'https://cdn.seat42f.com/wp-content/uploads/2013/08/12201104/CHARLIE-Its-Always-Sunny-In-Philadelphia.jpg',
+  input: 'https://i.imgur.com/LYXjKN6.jpeg',
   imageUrl: '',
   boxArr: [],
   route: 'signin',
@@ -109,22 +109,29 @@ class App extends Component {
     })
   }
 
-  calculateFaceLocation = (data) => {
+  calculateBoxLocation = (data) => {
     if (!data || !data.outputs) return {};
-    const caiBboxArray = data.outputs[0].data.regions.map(reg => reg.region_info.bounding_box);
+    console.log(data);
+    const caiBboxArray = data.outputs[0].data.regions.map(reg => ({
+      bbox: reg.region_info.bounding_box,
+      name: reg.data.concepts[0].name,
+      value: reg.data.concepts[0].value
+    }));
 
     const image = document.getElementById('inputImage');
     const width = Number(image.width);
     const height = Number(image.height);
-    return caiBboxArray.map(bbox => ({
-      left_col: bbox.left_col * width,
-      top_row: bbox.top_row * height,
-      right_col: width - (bbox.right_col * width),
-      bottom_row: height - (bbox.bottom_row * height)
+    return caiBboxArray.filter(b => b.value > 0.7).map(box => ({
+      left_col: box.bbox.left_col * width,
+      top_row: box.bbox.top_row * height,
+      right_col: width - (box.bbox.right_col * width),
+      bottom_row: height - (box.bbox.bottom_row * height),
+      name: box.name,
+      value: box.value
     }));
   }
 
-  displayFaceBox = (boxArr) => {
+  displaySwagBox = (boxArr) => {
     this.setState({ boxArr: boxArr })
   }
 
@@ -165,7 +172,7 @@ class App extends Component {
               })
               .catch(err => console.log(err));
           }
-          this.displayFaceBox(this.calculateFaceLocation(response));
+          this.displaySwagBox(this.calculateBoxLocation(response));
         })
       .catch(err => console.log(err));
   }

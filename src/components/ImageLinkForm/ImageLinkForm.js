@@ -7,7 +7,7 @@ class ImageLinkForm extends React.Component {
     return (
       <div>
         <p className='f5 ph5'>
-          {'This Magic Graph will detect faces in your picture. Try it.'}
+          {'Check your fashion sense with this apparel image classifier.'}
         </p>
         <div className="centerInput ma3">
           <div className='form pa4  br3 shadow-2'>

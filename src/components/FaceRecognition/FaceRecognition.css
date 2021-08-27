@@ -1,7 +1,26 @@
 .bounding-box{
-  
   position:absolute;
   box-shadow: 0 0 0 3px #3893b8 inset;
   cursor: pointer;
   z-index: 10;
+  opacity: .7;
+  transition: 0.2s ease-in-out;
+}
+.tag-box{
+  position:absolute;
+  top: -0.6rem;
+  left:0px;
+  color: white;
+  font-size: .6rem;
+  background-color:  #3893b8;
+}
+.dim{
+  opacity: 0.25;
+  transition: 0.2s ease-in-out;
+}
+
+
+.bounding-box:hover {
+  opacity: 1;
+  transition: 0.2s ease-in-out;
 }
